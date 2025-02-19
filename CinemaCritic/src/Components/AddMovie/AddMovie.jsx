@@ -3,7 +3,7 @@
     import './AddMovie.css';
     import upload_area from '../../assets/upload_area.svg';
 
-    const AddMovie = ({ movie, onClose}) => {
+    const AddMovie = ({ movie, onClose,URL}) => {
     const [cineDetail, setCineDetail] = useState({
         name: "",
         image: "",
@@ -64,7 +64,7 @@
         let formData = new FormData();
         formData.append('cine', image);
 
-        await fetch('http://localhost:4001/api/admin/upload', {
+        await fetch(`${URL}/api/admin/upload`, {
         method: 'POST',
         headers: { Accept: 'application/json' },
         body: formData,
@@ -74,7 +74,7 @@
         cine.image = responseData.image_url;
         console.log(cine);
 
-        await fetch('http://localhost:4001/api/admin/addcine', {
+        await fetch(`${URL}/api/admin/addcine`, {
             method: 'POST',
             headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
             body: JSON.stringify(cine),
