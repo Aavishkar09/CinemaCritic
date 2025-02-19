@@ -1,0 +1,13 @@
+.movie-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    margin: 100px auto 20px auto;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+}
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
