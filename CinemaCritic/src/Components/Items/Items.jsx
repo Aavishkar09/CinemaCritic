@@ -1,6 +1,5 @@
 import React from 'react'
 import './Items.css'
-import poster1 from '../../assets/thor.jpg'
 
 const Items = (props) => {
   return (

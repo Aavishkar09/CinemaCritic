@@ -22,7 +22,6 @@ const Navbar = () => {
   return (
     <div className='navbar-container'>
         <div className='navbar-left'>
-            <img src='' />
             <Link style={{ textDecoration: 'none' }} to='/'>Cinema Critic</Link>
         </div>
         <div className='navbar-right'>
