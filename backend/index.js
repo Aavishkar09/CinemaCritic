@@ -7,11 +7,12 @@ const userRoutes = require("./routes/userRoutes");
 
 
 const app = express();
+app.use(cors());
 const PORT = process.env.PORT || 4001;
 
 // Middleware
 app.use(express.json());
-app.use(cors());
+
 app.use(express.urlencoded({ extended: true }));
 
 // Connect to Database
