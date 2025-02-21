@@ -1,9 +1,11 @@
-    import React, { useState, useEffect } from 'react';
+    import React, { useState, useEffect, useContext } from 'react';
     import { TextField, Button, Paper, Box, Typography } from "@mui/material";
     import './AddMovie.css';
     import upload_area from '../../assets/upload_area.svg';
+import { CategoryProvider } from '../../Context/CategoryContext';
+import { backendURL } from '../../Context/CategoryContext';
 
-    const AddMovie = ({ movie, onClose,URL}) => {
+    const AddMovie = ({ movie, onClose}) => {
     const [cineDetail, setCineDetail] = useState({
         name: "",
         image: "",
@@ -58,23 +60,22 @@
 
     const addCine = async () => {
         console.log(cineDetail);
-        let responseData;
+        let result;
         let cine = { ...cineDetail };
 
         let formData = new FormData();
         formData.append('cine', image);
 
-        await fetch(`${URL}/api/admin/upload`, {
+        await fetch(`${backendURL}/api/admin/upload`, {
         method: 'POST',
         headers: { Accept: 'application/json' },
         body: formData,
-        }).then(resp => resp.json()).then(data => { responseData = data });
+        }).then(resp => resp.json()).then(data => result=data);
+  
+        if (result) {
+        cine.image = result.imageUrl;
 
-        if (responseData.success) {
-        cine.image = responseData.image_url;
-        console.log(cine);
-
-        await fetch(`${URL}/api/admin/addcine`, {
+        await fetch(`${backendURL}/api/admin/addcine`, {
             method: 'POST',
             headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
             body: JSON.stringify(cine),

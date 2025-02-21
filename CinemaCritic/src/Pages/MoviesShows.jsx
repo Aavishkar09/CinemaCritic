@@ -52,7 +52,7 @@ const Movies = () => {
   return (
     <div className="movie-page">
       <h2>All Movies</h2>
-
+      
       <div className="sorting-controls" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
         <ToggleButtonGroup value={sortField} exclusive onChange={handleSortField} aria-label="Sort Field">
           <ToggleButton value="year">Year</ToggleButton>
@@ -70,6 +70,7 @@ const Movies = () => {
       <div className="movie-container">
         {displayData.map((item, index) => (
           <Items key={index} poster={item.image} name={item.name} rating={item.rating} year={item.year} />
+          
         ))}
       </div>
 
