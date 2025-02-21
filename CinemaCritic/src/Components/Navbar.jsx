@@ -1,9 +1,6 @@
 import React, { useRef, useState , useEffect} from 'react'
 import './Navbar.css'
 import { Link, useLocation,useNavigate} from 'react-router-dom'
-import { styled, alpha } from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
-import SearchIcon from '@mui/icons-material/Search';
 import Button from '@mui/material/Button';
 import { useCategory } from '../Context/CategoryContext';
 import TextField from '@mui/material/TextField';

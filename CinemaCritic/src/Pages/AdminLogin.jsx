@@ -8,7 +8,7 @@ import {
   Box,
   Paper
 } from "@mui/material";
-import { Navigate } from "react-router-dom";
+
 
 const AdminLogin = ({ setIsAdmin }) => {
   const navigate = useNavigate();

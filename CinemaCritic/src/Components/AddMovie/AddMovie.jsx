@@ -2,8 +2,7 @@
     import { TextField, Button, Paper, Box, Typography } from "@mui/material";
     import './AddMovie.css';
     import upload_area from '../../assets/upload_area.svg';
-import { CategoryProvider } from '../../Context/CategoryContext';
-import { backendURL } from '../../Context/CategoryContext';
+    import { backendURL } from '../../Context/CategoryContext';
 
     const AddMovie = ({ movie, onClose}) => {
     const [cineDetail, setCineDetail] = useState({
