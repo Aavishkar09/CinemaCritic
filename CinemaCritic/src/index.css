@@ -1,0 +1,11 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    font-family: 'poppins';
+    width: 100%;
+    overflow-x: hidden;
+    background: black;
+    color: white;
+}

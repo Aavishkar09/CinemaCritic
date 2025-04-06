@@ -1,8 +1,8 @@
 
-.movie-card {
+.movie-cardd {
     width: 220px;
     height: 400px;
-    background: #222;
+    background: black;
     border-radius: 10px;
     overflow: hidden;
     text-align: center;
@@ -11,7 +11,7 @@
 
 }
 
-.movie-card img {
+.movie-cardd img {
     width: 220px;
     height: 270px;
     border-radius: 5px;

@@ -1,9 +1,5 @@
 const Cine = require("../models/cineModel");
 const multer = require("multer");
-const path = require("path");
-const { google } = require("googleapis");
-const fs = require("fs");
-const { file } = require("googleapis/build/src/apis/file");
 require("dotenv").config();
 const cloudinary = require("cloudinary").v2;
 const streamifier = require("streamifier");
@@ -18,15 +14,13 @@ const storage = multer.memoryStorage();
 
 const upload = multer({ storage });
 
-// Upload Image
+
 const uploadImage = async (req, res) => {
     if (!req.file) {
         return res.status(400).json({ message: "No image uploaded!" });
       }
-    
-      // Convert the file buffer to a stream and upload it to Cloudinary
       const uploadStream = cloudinary.uploader.upload_stream(
-        { folder: "MovieImages" }, // Replace with your Cloudinary folder name
+        { folder: "MovieImages" },
         (error, result) => {
           if (error) {
             console.error("Error uploading to Cloudinary:", error);
@@ -40,11 +34,11 @@ const uploadImage = async (req, res) => {
         }
       );
     
-      // Stream the file buffer to Cloudinary
+
       streamifier.createReadStream(req.file.buffer).pipe(uploadStream);
 };
 
-// Add Cine
+
 const addCine = async (req, res) => {
     try {
         const cine = await Cine.create(req.body);
@@ -54,7 +48,7 @@ const addCine = async (req, res) => {
     }
 };
 
-// Remove Cine
+
 const removeCine = async (req, res) => {
     try {
         await Cine.findByIdAndDelete(req.body._id);
@@ -64,14 +58,73 @@ const removeCine = async (req, res) => {
     }
 };
 
-// Get All Cines
+
 const getAllCines = async (req, res) => {
-    const cines = await Cine.find();
-    res.json(cines);
+  try {
+      const searchQuery = req.query.query;
+      let filter = {};
+      if (searchQuery) {
+          filter = { name: { $regex: searchQuery, $options: "i" } };
+      }
+      const cines = await Cine.find(filter);
+      res.json(cines);
+  } catch (error) {
+      res.status(500).json({ error: "Failed to fetch movies" });
+  }
 };
 
+
+const getCineById = async (req, res) => {
+  try {
+      const { id } = req.params;
+      const cine = await Cine.findById(id);
+      if (!cine) {
+          return res.status(404).json({ success: false, message: "Cine not found!" });
+      }
+      res.status(200).json({ success: true, cine });
+  } catch (error) {
+      res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+
+const viewCine = async (req, res) => {
+  try {
+      const { id } = req.params;
+      const cine = await Cine.findByIdAndUpdate(id, { $inc: { views: 1 } }, { new: true });
+
+      if (!cine) {
+          return res.status(404).json({ success: false, message: "Cine not found!" });
+      }
+
+      res.status(200).json({ success: true, cine });
+  } catch (error) {
+      res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+
+const getTrendingCines = async (req, res) => {
+  try {
+      const trendingCines = await Cine.find()
+          .sort({ views: -1 })
+          .limit(10);
+
+      res.json(trendingCines);
+  } catch (error) {
+      res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+
 const updateCine = async (req,res) => {
-    
+    try{
+        const { genres } = req.body;
+        const result = await Cine.updateMany({}, { $set: { genres } });
+        res.json({ message: "Genres updated successfully", modifiedCount: result.modifiedCount });
+    }catch (error) {
+        res.status(500).json({ message: "Error updating genres", error: error.message });
+    }
 }
 
-module.exports = { upload, uploadImage, addCine, removeCine, getAllCines };
+module.exports = { upload, uploadImage, addCine, removeCine, getAllCines,getCineById,viewCine,getTrendingCines,updateCine};

@@ -19,7 +19,7 @@ const AdminLogin = ({ setIsAdmin }) => {
 
   const handleLogin = () => {
     setIsAdmin(true);
-    navigate('/admin'); // Set admin login state to true
+    navigate('/admin'); 
   };
 
   const handleSubmit = (e) => {

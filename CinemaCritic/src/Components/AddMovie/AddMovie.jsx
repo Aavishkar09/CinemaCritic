@@ -2,7 +2,7 @@
     import { TextField, Button, Paper, Box, Typography } from "@mui/material";
     import './AddMovie.css';
     import upload_area from '../../assets/upload_area.svg';
-    import { backendURL } from '../../Context/CategoryContext';
+    // import { backendURL } from '../../Context/CategoryContext';
 
     const AddMovie = ({ movie, onClose}) => {
     const [cineDetail, setCineDetail] = useState({
@@ -16,6 +16,8 @@
         section: ""
     });
 
+
+    const backendURL = "";
     const [image, setImage] = useState(null);
 
     useEffect(() => {
@@ -23,7 +25,6 @@
         setCineDetail(movie);
         setImage(movie.image || null);
         } else {
-        // Reset form when movie is null
         setCineDetail({
             name: "",
             image: "",
@@ -80,7 +81,7 @@
             body: JSON.stringify(cine),
         }).then(res => res.json()).then(data => {
             data.success ? alert("Movie Added/Updated") : alert("Failed");
-            onClose(); // Close form after submission
+            onClose();
         });
         }
     };
@@ -98,8 +99,8 @@
                 src={
                 image
                     ? image instanceof File
-                    ? URL.createObjectURL(image) // Show preview for new image
-                    : image // Show existing URL when editing
+                    ? URL.createObjectURL(image) 
+                    : image 
                     : upload_area
                 }
                 alt="Upload Thumbnail"

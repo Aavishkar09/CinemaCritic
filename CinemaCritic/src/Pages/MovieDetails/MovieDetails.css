@@ -1,0 +1,23 @@
+.movie {
+    padding-top: 100px;
+}
+.movies-similar{
+    margin-top: 100px;
+}
+.movies-similar h2{
+    padding-left: 80px;
+}
+.movies-similar-wrapper{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    margin: 20px auto;
+    width: 90%;
+    padding-top: 20px;
+}
+
+@media(max-width: 720px){
+    .movies-similar h2{
+        padding-left: 20px;
+    }
+}

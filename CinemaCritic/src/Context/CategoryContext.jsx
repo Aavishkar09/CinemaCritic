@@ -1,33 +1,47 @@
-import { useState,useContext } from "react";
-import { useEffect } from "react";
-import { createContext } from "react";
+import { useState, useContext, useEffect, createContext } from "react";
 
 const CategoryContext = createContext();
 
-export const CategoryProvider = ({children})=>{
-    const [data,setData] = useState([]);
+export const CategoryProvider = ({ children }) => {
+    const [data, setData] = useState([]);  
+    const [trendingData, setTrendingData] = useState([]);  
     const [searchQuery, setSearchQuery] = useState("");
 
-    useEffect(()=>{
-        const fetchData = async () => {
-            try{
-                const response = await fetch(`https://cinemacritic-production.up.railway.app/api/admin/allcine`);
+    const backendURL = `${import.meta.env.VITE_API_URL}`;
+
+    // Fetch all movies
+    useEffect(() => {
+        const fetchMovies = async () => {
+            try {
+                const response = await fetch(`${backendURL}/api`);
                 const result = await response.json();
                 setData(result);
+            } catch (error) {
+                console.error("Error fetching movies:", error);
             }
-            catch(error){
-                console.log(error);            
+        };
+        fetchMovies();
+    }, []);
+
+    // Fetch trending movies
+    useEffect(() => {
+        const fetchTrendingMovies = async () => {
+            try {
+                const response = await fetch(`${backendURL}/api/trending/`);
+                const result = await response.json();
+                setTrendingData(result);
+            } catch (error) {
+                console.error("Error fetching trending movies:", error);
             }
-        }
-        fetchData();
-    },[])
-    return(
-        <CategoryContext.Provider value={{data,searchQuery, setSearchQuery,backendURL}}>
+        };
+        fetchTrendingMovies();
+    }, []);
+
+    return (
+        <CategoryContext.Provider value={{ data, trendingData, searchQuery, setSearchQuery, backendURL }}>
             {children}
         </CategoryContext.Provider>
-    )
-}
-
-export const backendURL = "https://cinemacritic-production.up.railway.app" ;
+    );
+};
 
 export const useCategory = () => useContext(CategoryContext);

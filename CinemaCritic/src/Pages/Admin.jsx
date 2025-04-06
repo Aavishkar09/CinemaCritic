@@ -3,7 +3,7 @@ import Items from '../Components/Items/Items'
 import { useCategory } from '../Context/CategoryContext';
 import Pagination from "@mui/material/Pagination";
 import { Button } from '@mui/material';
-import './MoviesShows.css'
+import '../Components/Movies/Movies.css'
 import AddMovie from '../Components/AddMovie/AddMovie';
 
 const Admin = () => {
@@ -26,17 +26,16 @@ const Admin = () => {
       }, [searchQuery]);
 
       const handleEdit = (movie) => {
-        setEditMovie(movie); // Set the selected movie for editing
+        setEditMovie(movie); 
         setShowAddMovie(true);
       };
     
       const handleDelete = (id) => {
         console.log("Delete item with ID:", id);
-        // Implement your delete logic here
       };
 
       const handleAddMovie = () => {
-        setEditMovie(null); // Reset editMovie to ensure blank form
+        setEditMovie(null); 
         setShowAddMovie(true);
       };
       

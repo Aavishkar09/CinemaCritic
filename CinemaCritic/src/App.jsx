@@ -1,22 +1,24 @@
-import { useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css'
 import Navbar from './Components/Navbar';
-
-import MoviesShows from './Pages/MoviesShows';
 import AdminLogin from './Pages/AdminLogin';
 import Admin from './Pages/Admin';
+import Home from './Pages/Home';
+import MovieDetails from './Pages/MovieDetails/MovieDetails';
+import { useRef } from 'react';
 
 
 function App() {
+  const moviesRef = useRef(null);
   return (
     <BrowserRouter>
-      <Navbar/>
-      <Routes>
-        <Route path='/' element={<MoviesShows/>}/>
-        <Route path='/login' element={<AdminLogin/>}/>
-        <Route path='/admin' element={<Admin/>}/>
-      </Routes>
+      <Navbar moviesRef={moviesRef}/>
+        <Routes>
+          <Route path='/' element={<Home moviesRef={moviesRef}/>}/>
+          <Route path='/movie/:id' element={<MovieDetails/>}/>
+          <Route path='/login' element={<AdminLogin/>}/>
+          <Route path='/admin' element={<Admin/>}/>
+        </Routes>
     </BrowserRouter>
   )
 }

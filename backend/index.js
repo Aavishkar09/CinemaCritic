@@ -22,8 +22,8 @@ connectDB();
 app.use("/images", express.static("upload/images"));
 
 // Routes
-app.use("/api/admin", adminRoutes);
-app.use("/api/user", userRoutes);
+app.use("/api", adminRoutes);
+app.use("/", userRoutes);
 
 // Default Route
 app.get("/", (req, res) => res.send("Express Running"));
